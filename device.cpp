@@ -20,6 +20,8 @@
  * Implementation of CEC Device class for Python
  *
  * Author: Austin Hendrix <namniart@gmail.com>
+ *
+ * small change by freijnen (freijnen@zonnet.nl) change HDMI input on the tv instead of on the receiver
  */
 
 // request the std format macros
@@ -135,11 +137,11 @@ static PyObject * Device_av_input(Device * self, PyObject * args) {
       bool success;
       Py_BEGIN_ALLOW_THREADS
       data.initiator = adapter->GetLogicalAddresses().primary;
-      data.destination = self->addr;
-      data.opcode = CEC_OPCODE_USER_CONTROL_PRESSED;
+      data.destination = CECDEVICE_BROADCAST;
+      data.opcode = CEC_OPCODE_ACTIVE_SOURCE;
       data.opcode_set = 1;
-      data.PushBack(0x69);
-      data.PushBack(input);
+      data.PushBack(input*10);
+      data.PushBack(0);
       success = adapter->Transmit(data);
       Py_END_ALLOW_THREADS
       if( success ) {
