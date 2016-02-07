@@ -140,7 +140,7 @@ static PyObject * Device_av_input(Device * self, PyObject * args) {
       data.destination = CECDEVICE_BROADCAST;
       data.opcode = CEC_OPCODE_ACTIVE_SOURCE;
       data.opcode_set = 1;
-      data.PushBack(input*10);
+      data.PushBack(input*0x10);
       data.PushBack(0);
       success = adapter->Transmit(data);
       Py_END_ALLOW_THREADS
